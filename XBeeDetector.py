@@ -24,7 +24,7 @@ for line in Lines:
     lineNo+=1
 #XBee2
 for line in Lines:
-  port2 = line.split("tty")[1]
+  port2 = line.split("/dev/tty")[1]
   try:
     xbee2=XBeeDevice(port2,9600)
     xbee2.open(force_settings=True)
