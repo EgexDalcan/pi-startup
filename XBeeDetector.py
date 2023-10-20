@@ -1,36 +1,41 @@
 from digi.xbee.devices import XBeeDevice
-from digi.xbee.models.mode import OperatingMode
-from digi.xbee.packets.common import ATCommPacket
-from subprocess import call
 import os
 
 Lines = []
-call("createdevlist.sh", shell=True)
+#The ports of the XBees (This is the things we want from this script)
+xbeePort1 = ""
+xbeePort2 = ""
 with open("dev.txt", "r+") as devList:
   Lines = devList.readlines()
-lineNo = 1
+lineNo = 0
 
 #Finding the ports with XBees attached
 #XBee1
 for line in Lines:
-  port1 = "tty" + line.split("tty")[1].strip()
+  port1 = "/dev/tty" + line.split("tty")[1].strip()
   try:
     xbee1 = XBeeDevice(port1,9600)
     xbee1.open(force_settings=True)
+    print("XBee1 found!")
     for i in range(0,lineNo):
       Lines.remove(Lines[i])
     break
   except:
     lineNo+=1
+  print("Failed to find XBee1")
+  port1 = 'none'
 #XBee2
 for line in Lines:
-  port2 = line.split("/dev/tty")[1]
+  port2 = "/dev/tty" + line.split("tty")[1].strip()
   try:
     xbee2=XBeeDevice(port2,9600)
     xbee2.open(force_settings=True)
+    print("XBee2 found!")
     break
   except:
     pass
+  print("Failed to find XBee2")
+  port2 = 'none'
 #deleting the port list file
 try:
   os.remove("dev.txt")
@@ -43,32 +48,41 @@ with open("MacAdresses.txt", "r") as adressList:
 xbeeMac1 = adresses[0].strip()
 xbeeMac2 = adresses[1].strip()
 
-#The ports of the XBees (This is the things we want from this script)
-xbeePort1 = ""
-xbeePort2 = ""
+#Checking which are the XBees we want and putting them in a file
+try:
+  f = open("PortList.txt", "x")
+except:
+  os.remove("PortList.txt")
+  f = open("PortList.txt", "x")
 
-#Checking which are the XBees we want
-if(xbee1.get_64bit_addr() == xbeeMac1):
+if(str(xbee1.get_64bit_addr()) == xbeeMac1):
   xbeePort1 = port1
-  xbeePort2 = port2
-elif(xbee1.get_64bit_addr() == xbeeMac2):
+  print(xbeePort1)
+  f.write(xbeePort1 + '\n')
+elif(str(xbee1.get_64bit_addr()) == xbeeMac2):
   xbeePort2 = port1
+  print(xbeePort2)
+  f.write(xbeePort2 + '\n')
+else:
+  print('Could not find matching MAC address for XBee1.')
+  f.write("none\n")
+  if(port1 != 'none'):
+    print('An XBee found on: ' + port1 + ' with MAC address: ' + str(xbee1.get_64bit_addr()))
+
+if((str(xbee2.get_64bit_addr()) == xbeeMac1) & (xbeePort1 != port1)):
+  xbeePort2 = port2
+  print(xbeePort2)
+  f.write(xbeePort2 + '\n')
+elif((str(xbee2.get_64bit_addr()) == xbeeMac2) & (xbeePort1 != port2)):
   xbeePort1 = port2
+  print(xbeePort1)
+  f.write(xbeePort1 + '\n')
+else:
+  print('Could not find matching MAC address for XBee2.')
+  f.write("none\n")
+  if(port2 != 'none'):
+    print('An XBee found on: ' + port2 + ' with MAC address: ' + str(xbee2.get_64bit_addr()))
 
-#Preparing the packet that will make the XBees to go to AT mode
-#xbee1
-frameNo1 = xbee1.get_next_frame_id()
-packet1 = ATCommPacket(frameNo1, "AP", parameter=bytearray([OperatingMode.AT_MODE.code]))
-out1 = packet1.output(False)
-#xbee2
-frameNo2 = xbee2.get_next_frame_id()
-packet2 = ATCommPacket(frameNo2, "AP", parameter=bytearray([OperatingMode.AT_MODE.code]))
-out2 = packet2.output(False)
-
-#Turning the XBees back to AT mode
-#xbee1
-xbee1.comm_iface.write_frame(out1)
 xbee1.close()
-#xbee2
-xbee2.comm_iface.write_frame(out2)
 xbee2.close()
+f.close()
