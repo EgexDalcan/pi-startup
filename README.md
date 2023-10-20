@@ -6,3 +6,4 @@ a) Proper connection with their XBee Radios.
 b) Proper connection with their respective central station XBees and the internet through central VPN over XBnet.
   1) This will be done by IP addresses assigned to the tunneling XBnet devices.
   2) (Future) IP routing to ensure internet connection.
+To use, add the MacAdresses of the wired XBees and add the IPs for the interfaces.
