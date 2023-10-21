@@ -19,10 +19,10 @@ ip1 = fip.readline().strip()
 ip2 = fip.readline().strip()
 
 if(port1 != "none"):
-  p1 = subprocess.Popen(["xbnet", port1, "tun"])
+  p1 = subprocess.Popen(["sudo", "xbnet", port1, "tun"])
 
 if(port2 != "none"):
-  p2 = subprocess.Popen(["xbnet", port2, "tun"])
+  p2 = subprocess.Popen(["sudo", "xbnet", port2, "tun"])
   
 time.sleep(10)
 
