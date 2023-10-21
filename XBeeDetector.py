@@ -59,6 +59,7 @@ except:
 
 if(port1 == "none"):
   print("Could not find XBee1")
+  f.write("none")
 elif(str(xbee1.get_64bit_addr()) == xbeeMac1):
   xbeePort1 = port1
   print(xbeePort1)
@@ -75,6 +76,7 @@ else:
 
 if(port2 == "none"):
   print("Could not find XBee1")
+  f.write("none")
 elif((str(xbee2.get_64bit_addr()) == xbeeMac1) & (xbeePort1 != port1)):
   xbeePort2 = port2
   print(xbeePort2)
