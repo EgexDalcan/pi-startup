@@ -5,6 +5,8 @@ Lines = []
 #The ports of the XBees (This is the things we want from this script)
 xbeePort1 = ""
 xbeePort2 = ""
+port1 = "none"
+port2 = "none"
 with open("dev.txt", "r+") as devList:
   Lines = devList.readlines()
 lineNo = 0
