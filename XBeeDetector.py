@@ -55,7 +55,9 @@ except:
   os.remove("PortList.txt")
   f = open("PortList.txt", "x")
 
-if(str(xbee1.get_64bit_addr()) == xbeeMac1):
+if(port1 == "none"):
+  print("Could not find XBee1")
+elif(str(xbee1.get_64bit_addr()) == xbeeMac1):
   xbeePort1 = port1
   print(xbeePort1)
   f.write(xbeePort1 + '\n')
@@ -69,7 +71,9 @@ else:
   if(port1 != 'none'):
     print('An XBee found on: ' + port1 + ' with MAC address: ' + str(xbee1.get_64bit_addr()))
 
-if((str(xbee2.get_64bit_addr()) == xbeeMac1) & (xbeePort1 != port1)):
+if(port2 == "none"):
+  print("Could not find XBee1")
+elif((str(xbee2.get_64bit_addr()) == xbeeMac1) & (xbeePort1 != port1)):
   xbeePort2 = port2
   print(xbeePort2)
   f.write(xbeePort2 + '\n')
@@ -83,6 +87,8 @@ else:
   if(port2 != 'none'):
     print('An XBee found on: ' + port2 + ' with MAC address: ' + str(xbee2.get_64bit_addr()))
 
-xbee1.close()
-xbee2.close()
+if(port1 == "none"):
+  xbee1.close()
+if(port2 == "none"):
+  xbee2.close()
 f.close()
