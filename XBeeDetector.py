@@ -89,8 +89,8 @@ else:
   if(port2 != 'none'):
     print('An XBee found on: ' + port2 + ' with MAC address: ' + str(xbee2.get_64bit_addr()))
 
-if(port1 == "none"):
+if(port1 != "none"):
   xbee1.close()
-if(port2 == "none"):
+if(port2 != "none"):
   xbee2.close()
 f.close()
