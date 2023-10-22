@@ -27,10 +27,16 @@ if(port2 != "none"):
 time.sleep(10)
 
 if(port1 != "none"):
-  subprocess.run(["sudo", "ifconfig", "xbnet0", ip1, "up"])
+  try:
+    subprocess.run(["sudo", "ifconfig", "xbnet0", ip1, "up"])
+  except:
+    subprocess.run(["reboot"])
 
 if(port2 != "none"):
-  subprocess.run(["sudo", "ifconfig", "xbnet1", ip2, "up"])
+  try:
+    subprocess.run(["sudo", "ifconfig", "xbnet1", ip2, "up"])
+  except:
+    subprocess.run(["reboot"])
 
 fport.close()
 fip.close()
