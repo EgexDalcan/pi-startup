@@ -1,6 +1,7 @@
 import os
 import subprocess
 import time
+import XBeeReboot
 
 try:
   fport = open("PortList.txt", "r")
@@ -19,9 +20,11 @@ ip1 = fip.readline().strip()
 ip2 = fip.readline().strip()
 
 if(port1 != "none"):
+  XBeeReboot(port1)
   p1 = subprocess.Popen(["sudo", "xbnet", port1, "tun"])
 
 if(port2 != "none"):
+  XBeeReboot(port1)
   p2 = subprocess.Popen(["sudo", "xbnet", port2, "tun"])
   
 time.sleep(10)
@@ -30,13 +33,13 @@ if(port1 != "none"):
   try:
     subprocess.run(["sudo", "ifconfig", "xbnet0", ip1, "up"])
   except:
-    subprocess.run(["reboot"])
+    subprocess.run(["sudo", "reboot"])
 
 if(port2 != "none"):
   try:
     subprocess.run(["sudo", "ifconfig", "xbnet1", ip2, "up"])
   except:
-    subprocess.run(["reboot"])
+    subprocess.run(["sudo", "reboot"])
 
 fport.close()
 fip.close()
