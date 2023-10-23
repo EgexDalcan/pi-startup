@@ -20,11 +20,13 @@ ip1 = fip.readline().strip()
 ip2 = fip.readline().strip()
 
 if(port1 != "none"):
-  XBeeReboot(port1)
+  x = XBeeReboot.XBeeReboot(port1)
+  x.reset()
   p1 = subprocess.Popen(["sudo", "xbnet", port1, "tun"])
 
 if(port2 != "none"):
-  XBeeReboot(port1)
+  y = XBeeReboot.XBeeReboot(port2)
+  y.reset()
   p2 = subprocess.Popen(["sudo", "xbnet", port2, "tun"])
   
 time.sleep(10)
