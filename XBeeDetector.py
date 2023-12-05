@@ -91,6 +91,15 @@ else:
   if(port2 != 'none'):
     print('An XBee found on: ' + port2 + ' with MAC address: ' + str(xbee2.get_64bit_addr()))
 
+#If no MacAdress is specified in MacAdresses.txt but devices are still found, just pu them in the order you found them.
+if((xbeeMac1 == "none" & xbeeMac2 == "none") & (port1 != "none" | port2 != "none")):
+  print("No MacAdresses specified, but found XBee devices, putting XBee devices in random order.")
+  xbeePort1 = port1
+  xbeePort2 = port2
+  f.truncate(0)
+  f.write(xbeePort1 + '\n')
+  f.write(xbeePort2 + '\n')
+
 if(port1 != "none"):
   xbee1.close()
 if(port2 != "none"):
