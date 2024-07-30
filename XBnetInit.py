@@ -4,15 +4,15 @@ import time
 import XBeeReboot
 
 try:
-  fport = open("PortList.txt", "r")
-  os.remove("PortList.txt")
+  fport = open("PortList", "r")
+  os.remove("PortList")
 except:
-  raise Exception("PortList.txt not found or failed to open. Probably problem in XBeeDetector.py")
+  raise Exception("PortList not found or failed to open. Probably problem in XBeeDetector.py")
  
 try:
-  fip = open("IPList.txt", "r")
+  fip = open("IPList", "r")
 except:
-  raise Exception("IPList.txt not found or failed to open.")
+  raise Exception("IPList not found or failed to open.")
 
 port1 = fport.readline().strip()
 port2 = fport.readline().strip()

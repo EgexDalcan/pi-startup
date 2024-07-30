@@ -7,7 +7,7 @@ xbeePort1 = ""
 xbeePort2 = ""
 port1 = "none"
 port2 = "none"
-with open("dev.txt", "r+") as devList:
+with open("dev", "r+") as devList:
   Lines = devList.readlines()
 lineNo = 0
 
@@ -44,18 +44,18 @@ try:
 except:
   pass
 
-#The Mac Adresses of the XBees
-with open("MacAdresses.txt", "r") as adressList:
-  adresses = adressList.readlines()
-xbeeMac1 = adresses[0].strip()
-xbeeMac2 = adresses[1].strip()
+#The Mac Addresses of the XBees
+with open("MacAddresses", "r") as addressList:
+  addresses = addressList.readlines()
+xbeeMac1 = addresses[0].strip()
+xbeeMac2 = addresses[1].strip()
 
 #Checking which are the XBees we want and putting them in a file
 try:
-  f = open("PortList.txt", "x")
+  f = open("PortList", "x")
 except:
-  os.remove("PortList.txt")
-  f = open("PortList.txt", "x")
+  os.remove("PortList")
+  f = open("PortList", "x")
 
 if(port1 == "none"):
   print("Could not find XBee1")
@@ -91,9 +91,9 @@ else:
   if(port2 != 'none'):
     print('An XBee found on: ' + port2 + ' with MAC address: ' + str(xbee2.get_64bit_addr()))
 
-#If no MacAdress is specified in MacAdresses.txt but devices are still found, just pu them in the order you found them.
+#If no MacAddress is specified in MacAddresses but devices are still found, just pu them in the order you found them.
 if((xbeeMac1 == "none" and xbeeMac2 == "none") and (port1 != "none" or port2 != "none")):
-  print("No MacAdresses specified, but found XBee devices, putting XBee devices in random order.")
+  print("No MacAddresses specified, but found XBee devices, putting XBee devices in random order.")
   if(port1 != 'none'):
     print('An XBee found on: ' + port1 + ' with MAC address: ' + str(xbee1.get_64bit_addr()))
   if(port2 != 'none'):
