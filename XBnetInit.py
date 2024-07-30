@@ -18,6 +18,8 @@ port1 = fport.readline().strip()
 port2 = fport.readline().strip()
 ip1 = fip.readline().strip()
 ip2 = fip.readline().strip()
+if(port1 == port2):
+  port2 = "none"
 
 if(port1 != "none"):
   x = XBeeReboot.XBeeReboot(port1)

@@ -40,7 +40,7 @@ for line in Lines:
   port2 = 'none'
 #deleting the port list file
 try:
-  os.remove("dev.txt")
+  os.remove("dev")
 except:
   pass
 
@@ -98,6 +98,8 @@ if((xbeeMac1 == "none" and xbeeMac2 == "none") and (port1 != "none" or port2 != 
     print('An XBee found on: ' + port1 + ' with MAC address: ' + str(xbee1.get_64bit_addr()))
   if(port2 != 'none'):
     print('An XBee found on: ' + port2 + ' with MAC address: ' + str(xbee2.get_64bit_addr()))
+  if(port1 == port2):
+    port2 = "none"
   xbeePort1 = port1
   xbeePort2 = port2
   f.truncate(0)
